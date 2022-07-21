@@ -1,0 +1,89 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="public/style.css">
+</head>
+<body>
+ 
+ <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid me-5 ms-5">
+          <a href="/"><img src="public/assets/dumbways_icon.png" class="navbar-brand" href=""></img></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active ms-5 me-5" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 w-100" href="/form-project">Add My Project</a>
+              </li>
+          </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              {{#if isLogin}}
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active ms-5 me-5" aria-current="page" >Hallo, {{user.name}}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 w-100" href="/logout">Logout</a>
+              </li>
+          </div>
+          {{else}}
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active ms-5 me-5" aria-current="page" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 w-100" href="/register">Register</a>
+              </li>
+          </div>
+           {{/if}}
+          <div class="ms-auto p-2">
+            <a href="/contact"><button class="contact-btn" type="button" href="">Contact</button></a>
+          </div>
+        </div>
+      </nav>
+
+    {{#if messages.danger}}
+    <div class="alert alert-danger" role="alert">
+        {{messages.danger}}
+    </div>
+    {{/if}}
+
+    <!-- Form -->
+    <div class="container-form-blog d-flex align-items-center justify-content-center">
+
+        <div class="container-form" style="width: 40%;">
+
+            <p class="h2 text-center my-4">Login</p>
+
+            <form action="/login" method="POST">
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input name="password" type="password" class="form-control" id="password"
+                        aria-describedby="emailHelp">
+                </div>
+                <div class="d-flex justify-content-start">
+                    <button type="submit" class="btn btn-danger text-white">Submit</button>
+                </div>
+            </form>
+
+        </div>
+        <!-- End Form -->
+</body>      

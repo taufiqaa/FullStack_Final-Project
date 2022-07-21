@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <title>{{title}}</title>   
+    <link rel="stylesheet" href="/public/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid me-5 ms-5">
+          <a href="/"><img src="/public/assets/dumbways_icon.png" class="navbar-brand" href=""></img></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active ms-5 me-5" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 w-100" href="/form-project">Add My Project</a>
+              </li>
+          </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              {{#if isLogin}}
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active ms-5 me-5" aria-current="page" >Hallo, {{user.name}}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 w-100" href="/logout">Logout</a>
+              </li>
+          </div>
+          {{else}}
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active ms-5 me-5" aria-current="page" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 w-100" href="/register">Register</a>
+              </li>
+          </div>
+           {{/if}}
+          <div class="ms-auto p-2">
+            <a href="/contact"><button class="contact-btn" type="button" href="">Contact</button></a>
+          </div>
+        </div>
+      </nav>
+<section class="project-section mt-2">
+    <form action='/edit-project', method="post" enctype="multipart/form-data">
+        <!--<h1 style="text-align: center; color: navy;">Add My Project</h1>-->
+        <div class="mb-3">
+          <label for="project_name" class="form-label">Project Name</label>
+          <input type="text" name="projectTitle"  class="form-control" id="project_name" aria-describedby="emailHelp" value="{{data.project_title}}">
+          <input type="hidden" id="input-id" name="id" class="form-control" value="{{data.id}}">
+        </div>
+        <div class="container_date">
+            <div class="left_date">
+                <div class="mb-3">
+                    <label for="start_date" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" name="startDate" id="start_date" aria-describedby="emailHelp" value="{{data.start_date}}">
+                </div>
+            </div>        
+            <div class="right_date">
+                <div class="mb-3">
+                    <label for="end_date" class="form-label">End Date</label>
+                    <input type="date" class="form-control" name="endDate" id="end_date" aria-describedby="emailHelp"value="{{data.end_date}}">
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <div class="form-floating">
+                <textarea class="form-control" name="description" placeholder="Leave a message here" id="description" style="height: 100px; resize: none;" >{{data.description}}</textarea>
+              </div>
+        </div>
+    <div class="mb-3">
+        <label for="technologies" class="form-label">Technologies</label>
+        <div class="container_technologies" id="technologies">
+             <div id="left_technologies">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="checkboxs_value"  value="{{data.checkboxs_value}}" id="node_js">
+                    <label class="form-check-label" for="node_js">Node Js</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="checkboxs_value" value="{{data.checkboxs_value}}" id="react_js">
+                    <label class="form-check-label" for="react_js">React Js</label>
+                </div>
+            </div>
+                <div id="right_technologies">
+                    <div class="form-check">
+                        <input class="form-check-input" name="checkboxs_value" type="checkbox" value="{{data.checkboxs_value}}" id="vue_js">
+                            <label class="form-check-label" for="vue_js">Vue Js</label>    
+                    </div>        
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="checkboxs_value"
+                        value="{{data.checkboxs_value}}" id="angular">
+                        <label class="form-check-label" for="angular">Angular Js</label>    
+                    </div>
+            </div>
+        </div>
+    <div class="mb-3">
+        <label for="upload_image_button" class="form-label">Upload Image</label>
+        <input type="file" name="image_project" class="form-control" id="upload_image_button" aria-describedby="emailHelp">
+    </div>    
+    <div class="upload_project">
+        <button type="submit" id="upload_project_button">Post Project</button>
+    </div>
+    </form>
+</section>
+    
+
+
+
+<!--<script src="assets/javascript/blog.js"></script>-->
+
+</body>
+</html>

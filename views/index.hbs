@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="public/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid me-5 ms-5">
+          <a href="/"><img src="public/assets/dumbways_icon.png" class="navbar-brand" href=""></img></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active ms-5 me-5" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 w-100" href="/form-project">Add My Project</a>
+              </li>
+          </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              {{#if isLogin}}
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active ms-5 me-5" aria-current="page" >Hallo, {{user.name}}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 w-100" href="/logout">Logout</a>
+              </li>
+          </div>
+          {{else}}
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active ms-3 me-5" aria-current="page" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 w-100" href="/register">Register</a>
+              </li>
+          </div>
+           {{/if}}
+          <div class="ms-auto p-2">
+            <a href="/contact"><button class="contact-btn" type="button" href="">Contact</button></a>
+          </div>
+        </div>
+      </nav>
+
+<div class="container">
+    <div class="row">
+      <div class="col" style="height: 650px;">
+        <div class="col mt-0"  style="height:50px;">
+            <h1>Hi Welcome to my resume</h1>
+        </div>
+        <div class="col mt-3" style="height:200px;">
+            <p style="text-align:justify;">He is passionate about programming. He is eagerness to learn new things. He has leadership experience in student organizations such as The Chief Executive and Coordinator of division. He led and managed a team with more than 25 members. His organizational experiences helps him to improve leadership, communication, and analytical thinking skills. He is proactive and high motivation. He is used to working under pressure. He wants to become an expert programmer especially as a FullStack Developer.</p>
+        </div>
+        <div class="col mt-3" style="height:80px; display: flex;">
+            <a href="/contact"><button class="contact-btn" type="button" href="">Contact</button></a>
+                <div class="download_container"><h5>download CV <i class="fa-solid fa-download"></i></h5></div>
+        </div>
+        <div class="col mt-2" style="height:80px;">
+            <div class="icon">
+                <button class="icon_button"><i class="fa-brands fa-linkedin-in fa-2x"></i></button>
+                <button class="icon_button"><i class="fa-brands fa-instagram fa-2x"></i></button>
+                <button class="icon_button"><i class="fa-brands fa-facebook-f fa-2x"></i></button>
+                <button class="icon_button"><i class="fa-brands fa-twitter fa-2x"></i></button>
+            </div>
+        </div>
+    </div>
+      <div class="col p-5" style="height: 650px;">
+            <img class="mt-4 ms-5" src="public/assets/main_picture.jpg" alt="" id="default_picture">
+            <div class="identity ms-5">
+                <h5 style="margin-left:10px;">Mochammad Taufiq Ardiansyah Amir</h5>
+                <h6 style="margin-left:100px;">FullStack Developer</h6>
+            </div>
+      </div>
+    </div>
+    </div>
+    
+<section id="project-second-section">
+    <div class="big_content" id="big_content">
+        {{#each project}}
+        <div class="card" style="width: 18rem;">
+            <img src="/uploads/{{this.image_card}}" class="card-img-top" alt="...">
+            <div class="card-body pb-0">
+                <h5><a href="/{{this.id}}">{{this.project_title}}</a></h5>
+            </div>
+        <h6>Duration : {{this.duration}} month(s)</h6>
+            <div class="card-body mt-1">
+                <p class="card-text">{{this.description}}</p>      
+            </div>
+            <div class="card-body">
+                    <div class="flex_language_icon">
+                        {{#each this.checkboxs_value}}
+                        <div class="language_icon">
+                            <i class="fa-brands fa-{{this}} fa-2x"></i>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>      
+            <div class="card-body delete_edit_button">
+                <a href="/edit-project/{{this.id}}"><button type="button" id="edit_content_button">Edit</button></a>
+                <a href="/delete-project/{{this.id}}"><button type="button" id="delete_content_button">Delete</button></a>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    </section>
+
+</body>
+</html>
