@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 const flash = require('express-flash')
 const session = require('express-session')
 const hbs = require('hbs');
+const { CopyResponse } = require('pg-protocol/dist/messages');
 
 hbs.registerHelper("technologies", function(value,array,options){
     array = array instanceof Array ? array : [array];
@@ -66,7 +67,12 @@ const projects = [
     }
 ]
 
-app.get('/register', function (request, response) {
+
+app.get('/contact', function(request, response){
+    response.render('contact')
+})
+
+ app.get('/register', function (request, response) {
     response.render('register')
 })
 
@@ -87,14 +93,14 @@ app.post('/register', function (request, response) {
             if (err) throw err
 
             if (result.rowCount != 0) {
-                return res.redirect('/register')
+                return response.redirect('/register')
             }
 
             client.query(query, (err, result) => {
                 done()
                 if (err) throw err
 
-                res.redirect('/login')
+                response.redirect('/login')
             })
         })
     })
@@ -145,10 +151,6 @@ app.get('/logout', function (request, response) {
     response.redirect('/')
 })
 
-app.get('/contact', function(request, response){
-    response.render('contact')
-})
-
 app.get('/', function(request, response){
 
     let selectQuery = `SELECT *	FROM projects ORDER BY id DESC`
@@ -182,6 +184,7 @@ app.get('/', function(request, response){
     })
 })
 
+
 app.get('/form-project', function(request, response){
 
     let isLogin = request.session.isLogin
@@ -196,7 +199,7 @@ app.get('/form-project', function(request, response){
 
 app.post('/', upload.single('image_project'), function(request, response){
 
-    
+   
     let{projectTitle,startDate,endDate,description,checkboxs_value} = request.body;
 
     let cb_array = []
@@ -253,27 +256,6 @@ app.post('/', upload.single('image_project'), function(request, response){
         })
     })
      
-})
-
-app.get('/:id', function(request, response){
-    let id = request.params.id
-
-    let queryDetail =`SELECT * FROM projects WHERE id=${id}`
-           
-        
-
-    
-    db.connect((err, client, done) =>{
-        if(err) throw err
-
-        client.query(queryDetail, (err, result) =>{
-            done()
-            if(err) throw err
-
-        //  return console.log(result.rows[0]);
-            response.render('blog-detail', {data: result.rows[0]} )
-        })
-    })    
 })
 
 app.get('/delete-project/:id', function(request, response){
@@ -340,9 +322,9 @@ app.post('/edit-project',upload.single('image_project'), function(request, respo
         id
         ],
     };
-            // return  console.log(checkboxs_value);
+           
     client.query(queryUpdate, (err, result)=>{
-        // done()
+ 
         if(err) throw err
 
        response.redirect('/');
@@ -350,8 +332,23 @@ app.post('/edit-project',upload.single('image_project'), function(request, respo
     })
  })
 
+ app.get('/:id', function(request, response){
+    let id = request.params.id
 
+    let queryDetail =`SELECT * FROM projects WHERE id=${id}`
+           
+    db.connect((err, client, done) =>{
+        if(err) throw err
 
+        client.query(queryDetail, (err, result) =>{
+            // done()
+            // if(err) throw err
+
+       
+            // response.render('blog-detail', {data: result.rows[0]} )
+        })
+    })    
+})
 
 function getFullTime(time) {
     let date = time.getDate()
@@ -407,7 +404,7 @@ function getDistanceTime(time) {
                  
                 
 
-const port = 5500;
+const port = 3000;
 app.listen(port, function(){
     console.log(`server on port ${port} is running`);
 })
