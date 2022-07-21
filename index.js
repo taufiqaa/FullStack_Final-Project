@@ -132,6 +132,7 @@ app.post('/login', function (request, response) {
             if (isMatch) {
                 request.session.isLogin = true
                 request.session.user = {
+                    id: result.rows[0].id,
                     name: result.rows[0].name,
                 }
                 request.flash('success', 'login success')
@@ -153,7 +154,21 @@ app.get('/logout', function (request, response) {
 
 app.get('/', function(request, response){
 
-    let selectQuery = `SELECT *	FROM projects ORDER BY id DESC`
+    let selectQuery = ''
+    if (request.session.isLogin) {
+        selectQuery = `SELECT projects.*, name
+                        FROM projects
+                        INNER JOIN users
+                        ON projects.author_id = users.id
+                        WHERE projects.author_id = ${request.session.user.id}
+                        ORDER BY id DESC`
+    } else {
+        selectQuery = `SELECT projects.*, name
+                        FROM projects
+                        INNER JOIN users
+                        ON projects.author_id = users.id
+                        ORDER BY id DESC`
+    }
 
     db.connect((err,client,done)=>{
         if(err) throw err
@@ -170,7 +185,7 @@ app.get('/', function(request, response){
                 return{
                     ...project,
                     time_duration,
-               
+                    isLogin: request.session.isLogin
                     
                 }
             })
@@ -219,6 +234,7 @@ app.post('/', upload.single('image_project'), function(request, response){
                     .split("T")[0];
     let time_duration = timeDuration(new Date(s_dateString), new Date(e_dateString));
     let image_project = request.file.filename
+    let author= request.session.user.id
 
     let project = {
         projectTitle,
@@ -227,7 +243,8 @@ app.post('/', upload.single('image_project'), function(request, response){
         time_duration,
         description,
         checkboxs_value,
-        image_project
+        image_project,
+        author,
         // image: 'image.png'
     }
    
@@ -235,8 +252,8 @@ app.post('/', upload.single('image_project'), function(request, response){
         if (err) throw err
 
         let queryPost = {
-            text: `INSERT INTO projects (project_title,start_date,end_date, description,checkboxs_value, duration, image_card)
-            VALUES($1,$2,$3,$4,$5,$6,$7)`,
+            text: `INSERT INTO projects (project_title,start_date,end_date, description,checkboxs_value, duration, image_card, author_id)
+            VALUES($1,$2,$3,$4,$5,$6,$7,$8)`,
             values: [
                 projectTitle,
                 startDate,
@@ -244,7 +261,8 @@ app.post('/', upload.single('image_project'), function(request, response){
                 description,
                 cb_array,
                 time_duration,
-                image_project
+                image_project,
+                author
            ],
         };
             
@@ -260,7 +278,10 @@ app.post('/', upload.single('image_project'), function(request, response){
 
 app.get('/delete-project/:id', function(request, response){
     
-    
+    let isLogin = request.session.isLogin
+    if(!isLogin){
+    return response.redirect('/')
+    }
     let id = request.params.id
 
 
@@ -279,6 +300,10 @@ app.get('/delete-project/:id', function(request, response){
 })
 
 app.get('/edit-project/:id', function(request, response){
+    let isLogin = request.session.isLogin
+    if(!isLogin){
+    return response.redirect('/')
+    }
     let id = request.params.id
     db.connect((err, client, done)=>{
         if(err) throw err
@@ -307,10 +332,11 @@ app.post('/edit-project',upload.single('image_project'), function(request, respo
     let time_duration = timeDuration(new Date(startDate), new Date(endDate)); 
     let image_project = request.file.filename
     
+
     db.connect((err, client, done)=>{
     if(err) throw err
     let queryUpdate ={
-        text: `UPDATE projects SET project_title=$1, start_date=$2, end_date=$3,description=$4, duration=$5, checkboxs_value=$6, image_card=$7  WHERE id=$8`,
+        text: `UPDATE projects SET project_title=$1, start_date=$2, end_date=$3,description=$4, duration=$5, checkboxs_value=$6, image_card=$7 WHERE id=$8`,
      values: [
         projectTitle,
         startDate,
@@ -319,7 +345,7 @@ app.post('/edit-project',upload.single('image_project'), function(request, respo
         time_duration,
         cb_array,
         image_project,
-        id
+        id,
         ],
     };
            
@@ -332,20 +358,20 @@ app.post('/edit-project',upload.single('image_project'), function(request, respo
     })
  })
 
- app.get('/:id', function(request, response){
+ app.get('/blog-detail/:id', function(request, response){
     let id = request.params.id
 
-    let queryDetail =`SELECT * FROM projects WHERE id=${id}`
+    
            
     db.connect((err, client, done) =>{
         if(err) throw err
-
+        let queryDetail =`SELECT * FROM projects WHERE "id"=${id}`
         client.query(queryDetail, (err, result) =>{
-            // done()
-            // if(err) throw err
+            done()
+            if(err) throw err
 
        
-            // response.render('blog-detail', {data: result.rows[0]} )
+            response.render('blog-detail', {data: result.rows[0]} )
         })
     })    
 })

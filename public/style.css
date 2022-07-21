@@ -2,6 +2,12 @@ body{
     background-color:grey;
 }
 
+.profile{
+    margin-top: 60px; 
+    border-radius: 15px;
+    background-color: white;
+}
+
 .main_section{
     border-radius: 12px;
     background-color: rgb(181, 180, 180) 
@@ -192,6 +198,7 @@ label{
 /*blog-detail.html*/
 
 .top_section{
+    background-color: white;
     padding: 50px;
     width: 80vw;
     height: 450px;
@@ -236,6 +243,10 @@ label{
     box-sizing: border-box;
     
 }
+
+/* .duration_information h3{
+
+} */
 
 .duration_information #date_information{
     margin-top: 20px;
@@ -296,6 +307,9 @@ label{
     display: flex;
 }
 
+#time_information{
+    margin-top: 100px;
+}
 #time_information #time_icon{
     width: 20%;
     height: 100%;
@@ -313,6 +327,7 @@ label{
     box-sizing: border-box;
 }
 
+
 #output_duration h4{
     display: inline;
     font-size: 1vw;
@@ -323,7 +338,8 @@ label{
     height: 45%;
     box-sizing: border-box;
     display: flex;
-    flex-wrap: wrap
+    flex-wrap: wrap;
+    margin-top: 80px; 
 }
 
 #language_title{
@@ -339,52 +355,36 @@ label{
 }
 
 #language_information{
+    /* border: 1px solid black; */
     width: 100%;
     height: 80%;
     box-sizing: border-box;
     display:flex;
+    
 }
 
 #output_language_detail{
+    /* border: 1px solid red; */
     display: flex;
     flex-wrap: wrap;
-    margin-top: 20px;
-    justify-content: space-between;
+    margin-top: 10px;
+    justify-content: space-around;
+    box-sizing: border-box;
+    width: 50%;
 }
 
-#node_output{
-    display: flex;
+.fa-node-js, .fa-react, .fa-vuejs, .fa-angular{
+    margin-right: 20px;
 }
+
+
 
 #node_js_title{
     font-size: 20px;
 }
 
-#react_output{
-    display: flex;
-}
-
-#react_js_title{
-    font-size: 20px;
-}
-
-#vue_output{
-    display: flex;
-}
-
-#vue_js_title{
-    font-size: 20px;
-}
-
-#angular_output{
-    display: flex;
-}
-
-#angular_js_title{
-    font-size: 20px;
-}
-
 .bottom_section{
+    background-color: white;
     padding: 0 50px;
     padding-bottom: 150px;
     width: 80vw;
