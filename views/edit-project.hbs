@@ -70,7 +70,7 @@
             <div class="right_date">
                 <div class="mb-3">
                     <label for="end_date" class="form-label">End Date</label>
-                    <input type="date" class="form-control" name="endDate" id="end_date" aria-describedby="emailHelp"value="{{data.end_date}}">
+                    <input type="date" class="form-control" name="endDate" id="end_date" aria-describedby="emailHelp" value="{{data.end_date}}">
                 </div>
             </div>
         </div>
@@ -85,22 +85,22 @@
         <div class="container_technologies" id="technologies">
              <div id="left_technologies">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="checkboxs_value"  value="{{data.checkboxs_value}}" id="node_js">
+                    <input class="form-check-input" type="checkbox" name="checkboxs_value"  value="node-js" id="node_js" {{#technologies "node-js" data.checkboxs_value}} checked {{/technologies}}>
                     <label class="form-check-label" for="node_js">Node Js</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="checkboxs_value" value="{{data.checkboxs_value}}" id="react_js">
+                    <input class="form-check-input" type="checkbox" name="checkboxs_value" value="react" id="react_js" {{#technologies "react" data.checkboxs_value}} checked {{/technologies}}>
                     <label class="form-check-label" for="react_js">React Js</label>
                 </div>
             </div>
                 <div id="right_technologies">
                     <div class="form-check">
-                        <input class="form-check-input" name="checkboxs_value" type="checkbox" value="{{data.checkboxs_value}}" id="vue_js">
+                        <input class="form-check-input" name="checkboxs_value" type="checkbox" value="vuejs" id="vue_js" {{#technologies "vuejs" data.checkboxs_value}} checked {{/technologies}}>
                             <label class="form-check-label" for="vue_js">Vue Js</label>    
                     </div>        
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="checkboxs_value"
-                        value="{{data.checkboxs_value}}" id="angular">
+                        value="angular" id="angular_js" {{#technologies "angular" data.checkboxs_value}} checked {{/technologies}}>
                         <label class="form-check-label" for="angular">Angular Js</label>    
                     </div>
             </div>

@@ -5,7 +5,12 @@ const upload = require('./middlewares/uploadFile')
 const bcrypt = require('bcrypt')
 const flash = require('express-flash')
 const session = require('express-session')
+const hbs = require('hbs');
 
+hbs.registerHelper("technologies", function(value,array,options){
+    array = array instanceof Array ? array : [array];
+    return array.indexOf(value) > -1 ? options.fn(this): ""; 
+});
 //template engine = hbs
 app.set('view engine', 'hbs');
 
@@ -253,17 +258,20 @@ app.post('/', upload.single('image_project'), function(request, response){
 app.get('/:id', function(request, response){
     let id = request.params.id
 
-    let queryDetail = `SELECT * FROM projects WHERE id=${id}`
+    let queryDetail =`SELECT * FROM projects WHERE id=${id}`
+           
+        
 
+    
     db.connect((err, client, done) =>{
         if(err) throw err
 
         client.query(queryDetail, (err, result) =>{
             done()
-            // if(err) throw err
+            if(err) throw err
 
-            // console.log(result.rows[0]);
-            // response.render('blog-detail', {data: result.rows[0]} )
+        //  return console.log(result.rows[0]);
+            response.render('blog-detail', {data: result.rows[0]} )
         })
     })    
 })
@@ -319,8 +327,20 @@ app.post('/edit-project',upload.single('image_project'), function(request, respo
     
     db.connect((err, client, done)=>{
     if(err) throw err
-    let queryUpdate = `UPDATE projects SET project_title='${projectTitle}', start_date='${startDate}', end_date='${endDate}',description='${description}', duration='${time_duration}', checkboxs_value='${cb_array}', image_card='${image_project}'  WHERE id=${id}`
-
+    let queryUpdate ={
+        text: `UPDATE projects SET project_title=$1, start_date=$2, end_date=$3,description=$4, duration=$5, checkboxs_value=$6, image_card=$7  WHERE id=$8`,
+     values: [
+        projectTitle,
+        startDate,
+        endDate,
+        description,
+        time_duration,
+        cb_array,
+        image_project,
+        id
+        ],
+    };
+            // return  console.log(checkboxs_value);
     client.query(queryUpdate, (err, result)=>{
         // done()
         if(err) throw err
