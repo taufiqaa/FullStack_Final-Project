@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
+    <title>Login</title>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
@@ -28,12 +28,12 @@
           </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               {{#if isLogin}}
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-0 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active ms-5 me-5" aria-current="page" >Hallo, {{user.name}}</a>
+                <a class="nav-link active ms-5 me-5" aria-current="page">Hallo, {{user.name}}</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link p-2 w-100" href="/logout">Logout</a>
+                <a class="nav-link p-2 w-100" href="/logout" >Logout</a>
               </li>
           </div>
           {{else}}
@@ -59,7 +59,7 @@
     </div>
     {{/if}}
 
-    <!-- Form -->
+   
     <div class="container-form-blog d-flex align-items-center justify-content-center">
 
         <div class="container-form" style="width: 40%;">
@@ -78,11 +78,12 @@
                     <input name="password" type="password" class="form-control" id="password"
                         aria-describedby="emailHelp">
                 </div>
-                <div class="d-flex justify-content-start">
-                    <button type="submit" class="btn btn-danger text-white">Submit</button>
+                <div class="d-flex justify-content-start" style="margin-bottom: 20px;">
+                    <button type="submit" class="btn btn-primary text-white">Login</button>
                 </div>
+                <a href="/register"><h6>Create New Account</h6></a>
             </form>
 
         </div>
-        <!-- End Form -->
+       
 </body>      

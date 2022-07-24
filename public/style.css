@@ -8,6 +8,10 @@ body{
     background-color: white;
 }
 
+.card-img-top{
+    height: 180px;
+}
+
 .main_section{
     border-radius: 12px;
     background-color: rgb(181, 180, 180) 
